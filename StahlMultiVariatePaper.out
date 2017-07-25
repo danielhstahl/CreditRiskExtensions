@@ -1,0 +1,33 @@
+\BOOKMARK [1][-]{section.1}{Model Description}{}% 1
+\BOOKMARK [1][-]{section.2}{General framework}{}% 2
+\BOOKMARK [1][-]{section.3}{Alternate Interpretation}{}% 3
+\BOOKMARK [1][-]{section.4}{Latent Process}{}% 4
+\BOOKMARK [2][-]{subsection.4.1}{Solution to the SDE}{section.4}% 5
+\BOOKMARK [2][-]{subsection.4.2}{Moments of YT}{section.4}% 6
+\BOOKMARK [1][-]{section.5}{Numerical Solution for Risk Measures}{}% 7
+\BOOKMARK [2][-]{subsection.5.1}{Cumulative Density}{section.5}% 8
+\BOOKMARK [2][-]{subsection.5.2}{Expectation}{section.5}% 9
+\BOOKMARK [1][-]{section.6}{Liquidity Risk}{}% 10
+\BOOKMARK [2][-]{subsection.6.1}{Characteristic function and Loss distribution Moments}{section.6}% 11
+\BOOKMARK [2][-]{subsection.6.2}{Risk Contributions}{section.6}% 12
+\BOOKMARK [2][-]{subsection.6.3}{Application to XT}{section.6}% 13
+\BOOKMARK [2][-]{subsection.6.4}{Application to XT \040}{section.6}% 14
+\BOOKMARK [1][-]{section.7}{Worked Example}{}% 15
+\BOOKMARK [2][-]{subsection.7.1}{Overview}{section.7}% 16
+\BOOKMARK [2][-]{subsection.7.2}{Example Portfolio}{section.7}% 17
+\BOOKMARK [2][-]{subsection.7.3}{Total and Marginal Risk}{section.7}% 18
+\BOOKMARK [1][-]{section.8}{Conclusion}{}% 19
+\BOOKMARK [2][-]{subsection.8.1}{Applications}{section.8}% 20
+\BOOKMARK [3][-]{subsubsection.8.1.1}{Granular Pricing of Risk}{subsection.8.1}% 21
+\BOOKMARK [3][-]{subsubsection.8.1.2}{Basel Compliance}{subsection.8.1}% 22
+\BOOKMARK [3][-]{subsubsection.8.1.3}{Connection with Market Risk}{subsection.8.1}% 23
+\BOOKMARK [2][-]{subsection.8.2}{Further research}{section.8}% 24
+\BOOKMARK [1][-]{appendix.A}{Moments of YT}{}% 25
+\BOOKMARK [2][-]{subsection.A.1}{Expectation of zT YT}{appendix.A}% 26
+\BOOKMARK [2][-]{subsection.A.2}{Variance of zT YT}{appendix.A}% 27
+\BOOKMARK [1][-]{appendix.B}{Moments of XT and XT \040}{}% 28
+\BOOKMARK [2][-]{subsection.B.1}{Expectation of XT}{appendix.B}% 29
+\BOOKMARK [2][-]{subsection.B.2}{Variance of XT}{appendix.B}% 30
+\BOOKMARK [2][-]{subsection.B.3}{Expectation of XT \040}{appendix.B}% 31
+\BOOKMARK [2][-]{subsection.B.4}{Variance of XT \040}{appendix.B}% 32
+\BOOKMARK [1][-]{appendix.C}{Risk Contributions}{}% 33

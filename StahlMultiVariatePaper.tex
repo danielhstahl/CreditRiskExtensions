@@ -4,7 +4,6 @@
 \usepackage{amsfonts}
 \usepackage{graphicx}
 \usepackage{epstopdf}
-\usepackage{fontspec}
 \usepackage{float}
 \usepackage{fancyhdr}
 \usepackage{hyperref}
@@ -13,13 +12,6 @@
 \usepackage{algpseudocode}
 \usepackage{framed}
 \usepackage{amssymb}
-%\usepackage[round]{natbib}
-
-%\setcitestyle{open={(},close={)}}
-%\usepackage{citet}
-%\usepackage[toc,page]{appendix}
-%\usepackage{libertine}
-%\usepackage[libertine]{newtxmath}
 \theoremstyle{definition}
 
 \graphicspath{ {./eps/} } 
@@ -51,8 +43,6 @@
 %\setmainfont{Calibri}
 %\pagestyle{fancy}
 \fancyhf{}
-%\lhead{Audit Services | Quantitative Analysis}
-%\rhead{ BB\&T \thepage}
 
 \DeclareMathOperator*{\Max}{Max}
 \DeclareMathOperator*{\Min}{Min}
@@ -161,18 +151,16 @@ Where \(\delta(j)=\frac{1}{2}\) if \(j=0\) and one otherwise, \(\phi(u)\) is the
 To find the CDF of \(X\), \(g(X)=1\).  Integrating to find \(V_k\) produces the following result:
 
 \[V_k ^ {CDF}=\sin\left(k\pi \frac{x-a}{b-a}\right)\frac{b-a}{k\pi}\]
-When \(k=0\) the integral is trivial to evaluate and becomes \(x-a\).  The summation must be completed for each discrete \(x\) in order to evaluate the function over the entire domain.  However, to find the Value at Risk requires only traversing the domain up to the point \(\alpha\) where \(\alpha\) is the confidence of the Value at Risk.  
+When \(k=0\) the integral is trivial to evaluate and becomes \(x-a\).   To find the Value at Risk requires solving the equation \(q(x)=\alpha\) where \(\alpha\) is the confidence level of the Value at Risk and \(q\) is the CDF.  For example, a bisection method can be used to numerically solve the equation.
 
 \subsection{Expectation}
 
 To find the (partial) expectation of \(X\), \(g(X)=X\).  Again integrating \(V_k\),
-\[V_k ^{E}=x\sin \left(k\pi \frac{x-a}{b-a}\right)\frac{b-a}{k\pi}+\left(\frac{b-a}{k\pi}\right)^2 \left(\cos\left(k\pi \frac{x-a}{b-a}\right)+1\right)\]
+\[V_k ^{E}=x\sin \left(k\pi \frac{x-a}{b-a}\right)\frac{b-a}{k\pi}+\left(\frac{b-a}{k\pi}\right)^2 \left(\cos\left(k\pi \frac{x-a}{b-a}\right)-1\right)\]
 When \(k=0\) this becomes \(\frac{x^2-a^2}{2}\).  The entire expectation can be found in a single summation by specifying \(x=b\).  For the purposes of computing expected shortfall, the following representation becomes convenient:
 \[\rho_{ES}(X)=\frac{1}{\alpha}\mathbb{E}[-X \mathbb{I}_{X<-\rho_{VaR}}]\]
 
 The expected shortfall can thus be found in a single summation after finding the Value at Risk as shown above by setting \(x=\rho_{VaR}\).
-
-
 
 \section{Liquidity Risk} \label{riskContributions}
 In Stahl (2015) liquidity risk is modeled by a constant exposure (fixing time) and a probability of a ``crisis'' that is linear in the dollar credit loss.  This allowed the characteristic function of the portfolio loss to retain the same analytical form.  In this paper this concept is generalized further so that the exposure in the case of a liquidity ``crisis'' is an affine function of the individual asset balances at time \(t\).  Using this method retains the analytical characteristic function but also allows liquidity capital to be pushed down to individual loans.  In the case of a liquidity event (which increases in probability as credit losses mount), loans typically must be liquidated at large discounts to par to meet obligations.  The probability of this event occurring (at time \(T\)) is \(q X_T\) where \(X_T\) is the realization of the losses within the portfolio.  In Stahl (2015) the exposure was a fixed constant \(\lambda\).  
@@ -225,10 +213,8 @@ In the case of \(X_T\), it is useful to introduce the following ``partial'' vari
 \begin{multline} \sigma^2(z^1, z^2)=\\ \sum_i \sum_j \rho_{i,j} \frac{ z_i^1 z_j^2 \sigma_i \sigma_j}{A_{i,i} A_{j,j}} \left(T-\frac{1-e^{-A_{i,i}T}}{A_{i,i}}-\frac{1-e^{-A_{j,j}T}}{A_{j,j}}+\frac{1-e^{-(A_{i,i}+A_{j,j})T}}{A_{i,i}+A_{j,j}}\right) \end{multline}
 This function is related to \ref{varianceY} by \(\sigma^2(z, z)=\sigma^2(z)\).  Using this function, the risk contribution is as follows (see Appendix (\ref{rc}) for derivation):
 \begin{equation} \label{rcX}
-%\sigma_Y^2 p_k \mu_{l_k} \sum_j p_j \mu_{l_j}-\mu_Y p_k \phi_{l_k} ''(0) 
 \frac{1}{i}p_j \phi_j '(0)\mu (w_j)+c\frac{ \frac{1}{i}p_j \phi_j '(0) \sigma^2(w_j, d)-  p_j\phi''(0)  \mu(w_j)}{\sqrt{\mathbb{V}(X_T)}}
 \end{equation}
-%Where \(d\) is the vector \(d=\sum_j p_j l_j w_{j, k}\).
 \subsection{Application to \(X_T ^ \lambda\)} \label{appXTLambda}
 While the Euler allocation principal is useful for \(X_T\),  it does not apply for \(X_T ^ \lambda\).   \(X_T ^\lambda\) is not ``linear'' with respect to the individual assets in the following sense:
 \[\nexists f:\mathbb{R} \to \mathbb{R} \mid hX_T^\lambda= h f\left(\sum_j X_T ^ j\right)\]
@@ -249,40 +235,12 @@ This equation is non-linear in \(h\) and so the homogeneity constraint on \(\rho
 \end{enumerate}
 
 Using these criteria, the covariance risk contributions to the portfolio variance is as follows:
-%\begin{multline} \label{liquidityRiskContributions}
-%\rho_j(X_T ^ \lambda)=p_j l_j \mu(w_j)(1+q\lambda_0)+r_j b_j q \mathbb{E}[X_T]\\+\left(p_j l_j ^2  \mu(w_j)+p_j  l_j \sigma^2(w_j, d) \right)(1+q \lambda_0)^2 
-%+p_j l_j q \lambda_0 ^2 \mu(w_j) \\
-%+2 r_j b_j q \mathbb{V}(X_T)+r_j b_j q^2 \mathbb{V}(X_T)(\lambda+\lambda_0)+r_j b_j (\lambda_0+\lambda)q \mathbb{E}[X_T]
-%\end{multline}
 
 \begin{multline} \label{liquidityRiskContributions}
 \rho_j(X_T ^ \lambda)=\frac{1}{i}p_j \phi_j '(0)\mu(w_j) \left(1+q\lambda_0  \right) +r_j b_j q \mathbb{E}[X_T] \\+\frac{c}{\sqrt{\mathbb{V}(X_T ^ {\lambda})}}\left(\frac{1}{i}p_j \phi_j '(0)\mu(w_j) q \lambda_0 ^2 +r_j b_j (\lambda_0+\lambda)q \mathbb{E}[X_T]  \right)\\+\frac{c}{\sqrt{\mathbb{V}(X_T ^ {\lambda})}}\left(\frac{1}{i}p_j \phi_j '(0) \sigma^2(w_j, d)-p_j\phi''(0)   \mu(w_j) \right)(1+q \lambda_0)^2 \\
 +\frac{c}{\sqrt{\mathbb{V}(X_T ^ {\lambda})}}\left(2 r_j b_j q \mathbb{V}(X_T)+r_j b_j q^2 \mathbb{V}(X_T)(\lambda+\lambda_0)\right)
 \end{multline}
 
-
-
-
-%The appendices in Stahl (2015) provide the solution to the covariance of an asset with the portfolio within the current modeling framework.  
-
-
-%\begin{riskmeasure}
-%A random variable \(S\) has \emph{linear risk} if for all \(B_i \subset S\) satisfying  \(B_i \cap B_j =\varnothing\), 
-%\[\bigcup_i h B_j =hS\]
-%\end{riskmeasure}
-
-
-
-
-%The condition that \(\rho(S)\) be homogeneous is relatively benign in: most popular risk measures like VaR, expected shortfall, and standard deviation are all homogeneous of degree one (Tasche 2008 TRY TO CITE SOMEONE ELSE EHERE).  However the requirement that \(S\) have \emph{linear risk} is not met for \(X_T ^ \lambda\). 
-
-
-
-
-
-%The total risk can be found by inverting the characteristic function to recover the density and finding the Value at Risk (VaR) or some similar statistic. 
-
-%Tasche (2008) provides an axiomatic and robust framework for allocating capital to entities within a portfolio.  Given a risk measure \(\rho: \mathbb{R} \to \mathbb{R}\) that satisfies \(\rho(hS)=h^\tau \rho(S), \,\tau,\,h>0\)) for a random variable \(S\), the Euler allocation principal allows the capital allocated to a subset of the portfolio to add up to the total capital of the portfolio.  A particularly tractable risk measure for dividing capital is the ``covariance'' approach which allocates capital based on the covariance of an individual asset with the entire portfolio.  
 
 The framework presented in this section can be summarized as follows:
 \begin{enumerate}
