@@ -3,5 +3,5 @@
 *.docx
 *.txt
 *.log
-ResponseToReferee.pdf
-ResponseToReferee.tex
+*.aux
+*.out
